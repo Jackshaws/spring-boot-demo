@@ -1,0 +1,63 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3
+          http://maven.apache.org/xsd/assembly-1.1.3.xsd">       
+    <id>bin</id>
+    <baseDirectory>/spring-boot-demo-1-3</baseDirectory>
+    
+    <!--打包的文件格式    如：tar.zip war zip-->
+    <formats>
+        <format>zip</format>
+    </formats>
+    
+	<!-- 指定文件路径 -->
+    <fileSets>
+        <fileSet>
+        	<!-- 需要打包的路径 -->
+            <directory>${project.basedir}/src/main/java/com/script</directory>
+            <!-- 过滤     打包需要包含的文件 -->
+            <!-- <excludes>   
+               <exclude>*.xml</exclude> 
+            </excludes>  --> 
+            <!-- 打包后输出的路径 -->
+            <outputDirectory>./bin</outputDirectory>
+        </fileSet>
+    </fileSets>
+   
+    <moduleSets>
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <includeSubModules>false</includeSubModules>
+            <includes>
+                <include>com.ucmed.springBoot:spring-boot-demo-1-1</include>
+            </includes>
+            <binaries>
+                <outputDirectory>lib/</outputDirectory>
+                <unpack>false</unpack>
+                <!-- http://book.huihoo.com/maven-the-definitive-guide/sect-output-algorithm.html -->
+                 <!--依赖包打包到目录下  -->
+                 <!--匹配项目所有运行时的依赖  -->
+                 <!-- 依赖集合  -->
+                <dependencySets>
+                    <dependencySet>
+                    	<!-- 排除当前项目的构件  默认为true;可以把项目输出和项目依赖分开管理-->
+                    	<useProjectArtifact>true</useProjectArtifact>
+                    	<!-- 拆解依赖构建 默认为false ; 当设置为true时 Assembly插件会组合所有匹配依赖的拆解内容至归档的根目录 -->
+                    	<unpack>false</unpack>
+                    	<!-- 有两个配置选项可以用来协调定义依赖文件在套件归档中的位置：outputDirectory和outputFileNameMapping 
+                    		 想要使用依赖构件自身的属性来定义其在套件中的位置（如：想要将依赖放到与其groupId对应的目录中），
+                    		 则使用outputDirectory ；
+                    		 如果想要更进一步的自定义，并移除所有依赖的版本号 则使用outputFileNameMapping
+                    	-->
+                    	<!--  <outputFileNameMapping>
+        					${module.artifactId}.${module.extension}
+      					 </outputFileNameMapping> -->
+                   		<!-- 将依赖包打包到lib目录下。 -->
+                        <outputDirectory>lib/</outputDirectory>
+                        
+                    </dependencySet>
+                </dependencySets>
+            </binaries>
+        </moduleSet>
+    </moduleSets>
+</assembly>

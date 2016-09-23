@@ -1,0 +1,44 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3
+          http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+    <id>bin</id><!--bin ;jar-with-dependencies;src;project -->
+    <baseDirectory>/spring-boot-demo-1-3</baseDirectory>
+    <!--打包的文件格式    如：tar.zip war zip-->
+    <formats>
+        <format>zip</format>
+    </formats>
+    <!-- 指定文件路径 -->
+    <fileSets>
+        <fileSet>
+            <!-- 需要打包的路径 -->
+            <directory>${project.basedir}/src/main/java/com/script</directory>
+            <!-- 过滤     打包需要包含的文件 -->
+            <!-- <excludes>   
+               <exclude>*.xml</exclude> 
+            </excludes>  --> 
+            <!-- 打包后输出的路径 -->
+            <outputDirectory>./bin</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <moduleSets>
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <includeSubModules>false</includeSubModules>
+            <includes>
+                <include>com.ucmed.springBoot:spring-boot-demo-1-1</include>
+            </includes>
+            <binaries>
+                <outputDirectory>libs/</outputDirectory>
+                <unpack>false</unpack>
+                <!--依赖包打包到目录下  -->
+                <dependencySets>
+                    <dependencySet>
+                    	<!-- 将依赖包打包到lib目录下。 -->
+                        <outputDirectory>libs/</outputDirectory>
+                    </dependencySet>
+                </dependencySets>
+            </binaries>
+        </moduleSet>
+    </moduleSets>
+</assembly>
